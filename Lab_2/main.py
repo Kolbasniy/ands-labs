@@ -186,10 +186,9 @@ def _benchmark_products(product_count: int, slow_sample_size: int) -> None:
     product_results = {
         "Пузырьковая (выборка)": _measure_sort(bubble_sort, slow_sample),
         "Вставками (выборка)": _measure_sort(insertion_sort, slow_sample),
-        "Быстрая": _measure_sort(quick_sort, products),
+        "Быстрая": _measure_sort(quick_sort, slow_sample),
     }
     _print_results("Производительность сортировок товаров", "Алгоритм", "Элементов", product_results)
-    print(f"Пузырьковая сортировка и сортировка вставками выполнены на выборке из {slow_sample_size} товаров.")
 
 
 def _print_status_statistics(requests: list[Request]) -> None:
@@ -226,10 +225,6 @@ def _benchmark_requests(request_count: int, suspicious_threshold: int) -> None:
     _print_suspicious_ips(requests, suspicious_threshold)
 
 
-def main() -> None:
-    _benchmark_products(product_count=1000000, slow_sample_size=5000)
-    _benchmark_requests(request_count=10000, suspicious_threshold=100)
-
-
 if __name__ == "__main__":
-    main()
+    _benchmark_products(product_count=1000000, slow_sample_size=10000)
+    _benchmark_requests(request_count=10000, suspicious_threshold=100)
