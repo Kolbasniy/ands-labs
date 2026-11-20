@@ -5,7 +5,7 @@ from main import (
     CABLES,
     ITEMS,
     MAX_WEIGHT,
-    fractional_knapsack,
+    greedy_knapsack,
     min_connection_cost,
     select_activities,
 )
@@ -29,18 +29,19 @@ def test_select_activities(
 @pytest.mark.parametrize(
     ("items", "capacity", "expected"),
     [
-        ([], 10, 0.0),
-        ([(60, 10), (100, 20), (120, 30)], 50, 240.0),
-        ([(10, 5)], 2, 4.0),
-        ([(10, 5)], 0, 0.0),
+        ([], 10, 0),
+        ([(60, 10), (100, 20), (120, 30)], 50, 160),
+        ([(10, 5)], 2, 0),
+        ([(10, 5)], 0, 0),
+        ([(10, 5)], 5, 10),
     ],
 )
-def test_fractional_knapsack(
-    items: list[tuple[float, float]],
-    capacity: float,
-    expected: float,
+def test_greedy_knapsack(
+    items: list[tuple[int, int]],
+    capacity: int,
+    expected: int,
 ) -> None:
-    assert fractional_knapsack(items, capacity) == pytest.approx(expected)
+    assert greedy_knapsack(items, capacity) == expected
 
 
 @pytest.mark.parametrize(

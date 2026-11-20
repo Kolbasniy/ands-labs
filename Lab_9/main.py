@@ -37,14 +37,14 @@ def select_activities(activities: Sequence[tuple[int, int]]) -> list[tuple[int, 
     return selected_activities
 
 
-def fractional_knapsack(items: Sequence[tuple[float, float]], capacity: float) -> float:
+def greedy_knapsack(items: Sequence[tuple[int, int]], capacity: int) -> int:
     sorted_items = sorted(
         items,
         key=lambda item: item[0] / item[1],
         reverse=True,
     )
 
-    total_value = 0.0
+    total_value = 0
     remaining_capacity = capacity
 
     for value, weight in sorted_items:
@@ -54,10 +54,6 @@ def fractional_knapsack(items: Sequence[tuple[float, float]], capacity: float) -
         if weight <= remaining_capacity:
             total_value += value
             remaining_capacity -= weight
-        else:
-            fraction = remaining_capacity / weight
-            total_value += value * fraction
-            remaining_capacity = 0
 
     return total_value
 
@@ -91,7 +87,7 @@ if __name__ == "__main__":
         f"{chosen_activities}\n"
     )
 
-    max_value = fractional_knapsack(ITEMS, MAX_WEIGHT)
+    max_value = greedy_knapsack(ITEMS, MAX_WEIGHT)
     print("Задача B:")
     print(f"Максимальная стоимость в рюкзаке: {max_value}\n")
 
